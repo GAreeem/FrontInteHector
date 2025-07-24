@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+import {
+  Container,
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -36,6 +44,8 @@ function Login() {
             alert("Rol no reconocido");
             break;
         }
+      } else {
+        alert("Credenciales incorrectas");
       }
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
@@ -44,31 +54,44 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Ingresar</button>
-        <button onClick={() => navigate("/registro")}>Registrar cuenta</button>
-      </form>
-    </div>
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ padding: 4, marginTop: 10 }}>
+        <Typography variant="h5" gutterBottom align="center">
+          Iniciar Sesión
+        </Typography>
+        <form onSubmit={handleLogin}>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <TextField
+              label="Correo electrónico"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              label="Contraseña"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+            />
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Ingresar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              fullWidth
+              onClick={() => navigate("/registro")}
+            >
+              Registrar cuenta
+            </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 

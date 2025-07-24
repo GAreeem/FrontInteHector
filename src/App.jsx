@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
-import AdminHome from "./pages/home/AdminHome";
+import AdminHome from "./pages/home/ADMIN/AdminHome";
 import UsuarioHome from "./pages/home/UsuarioHome";
 import ClienteHome from "./pages/home/ClienteHome";
 import RutaProtegida from "./Components/RutaProtegida";
 import Registro from "./pages/registro";
+import Categorias from "./pages/home/ADMIN/Categorias";
 
 const App = () => {
   return (
@@ -18,6 +19,14 @@ const App = () => {
           element={
             <RutaProtegida rolPermitido="ADMIN">
               <AdminHome />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/categorias"
+          element={
+            <RutaProtegida rolPermitido="ADMIN">
+              <Categorias />
             </RutaProtegida>
           }
         />
