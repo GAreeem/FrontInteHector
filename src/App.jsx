@@ -2,11 +2,15 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import AdminHome from "./pages/home/ADMIN/AdminHome";
-import UsuarioHome from "./pages/home/UsuarioHome";
-import ClienteHome from "./pages/home/ClienteHome";
+import UsuarioHome from "./pages/home/Usuario/UsuarioHome";
+import ClienteHome from "./pages/home/CLIENT/ClienteHome";
 import RutaProtegida from "./Components/RutaProtegida";
 import Registro from "./pages/registro";
 import Categorias from "./pages/home/ADMIN/Categorias";
+import Servicios from "./pages/home/Usuario/Servicios";
+import CrearServicio from "./pages/home/Usuario/CrearServicio";
+import VerServicio from "./pages/home/CLIENT/VerReservacion";
+import HacerReservacion from "./pages/home/CLIENT/HacerReservacion";
 
 const App = () => {
   return (
@@ -39,10 +43,44 @@ const App = () => {
           }
         />
         <Route
+          path="/servicios"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <Servicios />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/crear-servicio/:idCategoria"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <CrearServicio />
+            </RutaProtegida>
+          }
+        />
+
+        <Route
           path="/cliente"
           element={
             <RutaProtegida rolPermitido="CLIENTE">
               <ClienteHome />
+            </RutaProtegida>
+          }
+        />
+
+        <Route
+          path="/ver-servicio/:idCategoria"
+          element={
+            <RutaProtegida rolPermitido="CLIENTE">
+              <VerServicio />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/reservar/:idServicio"
+          element={
+            <RutaProtegida rolPermitido="CLIENTE">
+              <HacerReservacion />
             </RutaProtegida>
           }
         />
