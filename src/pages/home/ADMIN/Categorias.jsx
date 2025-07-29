@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import Swal from "sweetalert2";
 import LayoutAdmin from "./LayoutAdmin";
+import { motion } from "framer-motion";
 
 const Categorias = () => {
   const [categorias, setCategorias] = useState([]);
@@ -61,26 +62,44 @@ const Categorias = () => {
   };
 
   const handleSave = async () => {
-    const url = editing ? `http://localhost:8080/categoria/${editing.idCategoriaServicio}` : "http://localhost:8080/categoria/";
-    const method = editing ? "PUT" : "POST";
+  const url = editing
+    ? `http://localhost:8080/categoria/${editing.idCategoriaServicio}`
+    : "http://localhost:8080/categoria/";
+  const method = editing ? "PUT" : "POST";
 
-    const res = await fetch(url, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(editing ? { ...form, idCategoriaServicio: editing.idCategoriaServicio } : form),
-    });
+  const payload = editing
+    ? {
+        idCategoriaServicio: editing.idCategoriaServicio,
+        nombre: form.nombre !== "" ? form.nombre : editing.nombre,
+        descripcion: form.descripcion !== "" ? form.descripcion : editing.descripcion,
+      }
+    : form;
 
-    if (res.ok) {
-      fetchCategorias();
-      handleClose();
-    } else {
-      const errorData = await res.json();
-      Swal.fire("Error", errorData.message || "Error en la operación", "error");
-    }
-  };
+  const res = await fetch(url, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (res.ok) {
+    fetchCategorias();
+    handleClose();
+    Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Tu categoría ha sido actualizada",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+  } else {
+    const errorData = await res.json();
+    Swal.fire("Error", errorData.message || "Error en la operación", "error");
+  }
+};
+
 
   const handleDelete = async (id) => {
     const res = await fetch(`http://localhost:8080/categoria/${id}`, {
@@ -100,6 +119,10 @@ const Categorias = () => {
 
   return (
     <LayoutAdmin>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
     <Box p={3}>
       <Typography variant="h5" gutterBottom>
         Gestión de Categorías
@@ -172,6 +195,7 @@ const Categorias = () => {
         </DialogActions>
       </Dialog>
     </Box>
+    </motion.div>
     </LayoutAdmin>
   );
 };

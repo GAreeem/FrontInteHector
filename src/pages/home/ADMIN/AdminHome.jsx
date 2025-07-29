@@ -89,6 +89,18 @@ const AdminHome = () => {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
+            <Paper sx={{ p: 3, borderRadius: 4 }} elevation={3} style={{ backgroundColor: "#1F2937", width: "300px" }}>
+              <EventAvailableIcon sx={{ fontSize: 40, color: "white" }} />
+              <Typography variant="h6" sx={{ mt: 2, color: "white" }}>
+                Bitacora
+              </Typography>
+              <Button variant="outlined" sx={{ mt: 2 }} onClick={() => navigate("/bitacora")}>
+                Ver Actividades
+              </Button>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={4}>
             <Paper sx={{ p: 3, borderRadius: 4 }} elevation={3}>
               <EmailIcon sx={{ fontSize: 40, color: "var(--beige-primary)", mr: 1 }} />
               <WhatsAppIcon sx={{ fontSize: 40, color: "var(--beige-primary)" }} />
@@ -97,18 +109,6 @@ const AdminHome = () => {
               </Typography>
               <Button variant="outlined" sx={{ mt: 2 }}>
                 Enviar
-              </Button>
-            </Paper>
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <Paper sx={{ p: 3, borderRadius: 4 }} elevation={3}>
-              <EventAvailableIcon sx={{ fontSize: 40, color: "var(--beige-primary)" }} />
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Confirmación de Asistencia
-              </Typography>
-              <Button variant="outlined" sx={{ mt: 2 }}>
-                Ver Respuestas
               </Button>
             </Paper>
           </Grid>

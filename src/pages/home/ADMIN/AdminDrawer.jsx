@@ -9,6 +9,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import {
+  Category as CategoryIcon,
   Dashboard as DashboardIcon,
   Add as AddIcon,
   EventAvailable as EventAvailableIcon,
@@ -17,8 +18,11 @@ import {
   Logout as LogoutIcon,
 } from "@mui/icons-material";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AdminDrawer = ({ logout }) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <Toolbar />
@@ -31,17 +35,17 @@ const AdminDrawer = ({ logout }) => {
             </ListItemIcon>
             <ListItemText primary="Inicio" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer" }}>
+          <ListItem button style={{ cursor: "pointer" }} onClick={() => navigate('/categorias')}>
             <ListItemIcon>
-              <AddIcon sx={{ color: "var(--beige-dark)" }} />
+              <CategoryIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
-            <ListItemText primary="Crear Invitación" />
+            <ListItemText primary="Gestionar Categorias" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer" }}>
+          <ListItem button style={{ cursor: "pointer" }} onClick={() => navigate("/bitacora")}>
             <ListItemIcon>
               <EventAvailableIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
-            <ListItemText primary="Confirmaciones" />
+            <ListItemText primary="Bitacora" />
           </ListItem>
           <ListItem button style={{ cursor: "pointer" }}>
             <ListItemIcon>
