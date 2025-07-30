@@ -12,6 +12,7 @@ import CrearServicio from "./pages/home/Usuario/CrearServicio";
 import VerServicio from "./pages/home/CLIENT/VerReservacion";
 import HacerReservacion from "./pages/home/CLIENT/HacerReservacion";
 import Bitacora from "./pages/home/ADMIN/Bitacora";
+import ServiciosInactivos from "./pages/home/ADMIN/ServiciosInactivos";
 
 const App = () => {
   return (
@@ -32,6 +33,14 @@ const App = () => {
           element={
             <RutaProtegida rolPermitido="ADMIN">
               <Categorias />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/serviciosInactivos"
+          element={
+            <RutaProtegida rolPermitido="ADMIN">
+              <ServiciosInactivos />
             </RutaProtegida>
           }
         />

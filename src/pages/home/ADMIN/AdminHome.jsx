@@ -114,12 +114,12 @@ const AdminHome = () => {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <Paper sx={{ p: 3, borderRadius: 4 }} elevation={3}>
-              <VisibilityIcon sx={{ fontSize: 40, color: "var(--beige-primary)" }} />
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Seguimiento de Correos
+            <Paper sx={{ p: 3, borderRadius: 4, backgroundColor: "#1F2937", width: "300px" }} elevation={3}>
+              <VisibilityIcon sx={{ fontSize: 40, color: "white" }} />
+              <Typography variant="h6" sx={{ mt: 2, color: "white" }}>
+                Servicios en espera
               </Typography>
-              <Button variant="outlined" sx={{ mt: 2 }}>
+              <Button variant="outlined" sx={{ mt: 2 }} onClick={() => navigate("/serviciosInactivos")}>
                 Ver Seguimiento
               </Button>
             </Paper>
