@@ -1,17 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import AdminHome from "./pages/home/ADMIN/AdminHome";
-import UsuarioHome from "./pages/home/UsuarioHome";
-import ClienteHome from "./pages/home/ClienteHome";
 import RutaProtegida from "./Components/RutaProtegida";
 import Registro from "./pages/registro";
 import Categorias from "./pages/home/ADMIN/Categorias";
+
 import "./index.css"; 
 import Usuarios from "./pages/home/ADMIN/Usuarios";
 import RegisterEmployee from "./pages/home/ADMIN/registerEmployee";
-import Servicios from "./pages/home/ADMIN/Servicios";
+import ServiciosAdmin from "./pages/home/ADMIN/Servicios";
 import RegisterService from "./pages/home/ADMIN/RegisterService";
-import Historial from "./pages/home/ADMIN/Historial";
+
+import ServiciosUsuario from "./pages/home/Usuario/Servicios";
+import CrearServicio from "./pages/home/Usuario/CrearServicio";
+import VerServicio from "./pages/home/CLIENT/VerReservacion";
+import HacerReservacion from "./pages/home/CLIENT/HacerReservacion";
+import Bitacora from "./pages/home/ADMIN/Bitacora";
+import ServiciosInactivos from "./pages/home/ADMIN/ServiciosInactivos";
 
 const App = () => {
   return (
@@ -44,15 +49,48 @@ const App = () => {
           }
         />
          <Route
-          path="/servicios"
+          path="/serviciosInactivos"
           element={
             <RutaProtegida rolPermitido="ADMIN">
-              <Servicios />
+              <ServiciosInactivos />
             </RutaProtegida>
           }
         />
         <Route
-          path="/registro-empleado"
+          path="/bitacora"
+          element={
+            <RutaProtegida rolPermitido="ADMIN">
+              <Bitacora />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/servicio-admin"
+          element={
+            <RutaProtegida rolPermitido="ADMIN">
+              <ServiciosAdmin />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/servicios"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <ServiciosUsuario />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/crear-servicio/:idCategoria"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <CrearServicio />
+            </RutaProtegida>
+          }
+        />
+
+        <Route
+          path="/cliente"
           element={
             <RutaProtegida rolPermitido="ADMIN">
               <RegisterEmployee />
@@ -67,11 +105,20 @@ const App = () => {
             </RutaProtegida>
           }
         />
-         <Route
-          path="/bitacora"
+      
+        <Route
+          path="/ver-servicio/:idCategoria"
           element={
-            <RutaProtegida rolPermitido="ADMIN">
-              <Historial />
+            <RutaProtegida rolPermitido="CLIENTE">
+              <VerServicio />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/reservar/:idServicio"
+          element={
+            <RutaProtegida rolPermitido="CLIENTE">
+              <HacerReservacion />
             </RutaProtegida>
           }
         />

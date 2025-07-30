@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Divider,
@@ -47,13 +46,13 @@ const AdminDrawer = ({ logout }) => {
             </ListItemIcon>
             <ListItemText primary="Categorias" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/servicios")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/servicio-admin")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <RoomServiceIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Servicios" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/reservaciones")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <EventAvailableIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
@@ -72,7 +71,7 @@ const AdminDrawer = ({ logout }) => {
             <ListItemText primary="Configuración" />
           </ListItem>
           <Divider sx={{ my: 1 }} />
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/perfil")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <PersonIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
