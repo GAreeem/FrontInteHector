@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import AdminHome from "./pages/home/ADMIN/AdminHome";
+import RecuperarContra from "./pages/recuperarContra";
+import RestablecerContra from "./pages/RestablecerContra";
 import UsuarioHome from "./pages/home/Usuario/UsuarioHome";
 import ClienteHome from "./pages/home/CLIENT/ClienteHome";
 import RutaProtegida from "./Components/RutaProtegida";
@@ -20,6 +22,10 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
+        <Route path="/recuperar-contrasena" element={<RecuperarContra />} />
+        <Route path="/restablecer-contrasena/:token" element={<RestablecerContra />} />
+        
+        {/* Rutas protegidas */}
         <Route
           path="/inicio"
           element={

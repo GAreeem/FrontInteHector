@@ -88,6 +88,9 @@ function Login() {
             >
               Registrar cuenta
             </Button>
+            <Typography variant="body2" color="primary" align="center" sx={{ cursor: "pointer", marginTop: 10 }} onClick={() => navigate("/recuperar-contrasena")}>
+              ¿Olvidaste tu contraseña?
+            </Typography>
           </Box>
         </form>
       </Paper>
