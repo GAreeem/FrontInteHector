@@ -12,7 +12,6 @@ const Registro = () => {
     email: '',
     telefono: '',
     password: '',
-    edad: '',
     idRol: 2 
   });
 
@@ -113,17 +112,7 @@ const Registro = () => {
               />
             </div>
             
-            <div className="form-group">
-              <label className="form-label">Edad*</label>
-              <input 
-                type="number" 
-                name="edad" 
-                value={formData.edad} 
-                onChange={handleChange} 
-                className="form-input"
-                required 
-              />
-            </div>
+            
           </div>
           
           <div className="form-group">

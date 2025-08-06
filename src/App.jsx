@@ -58,6 +58,14 @@ const App = () => {
             </RutaProtegida>
           }
         />
+        <Route 
+          path="/usuario"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <VerServicio />
+            </RutaProtegida>
+          }
+        />
 
         <Route
           path="/registro-empleado"
