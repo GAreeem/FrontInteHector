@@ -28,50 +28,44 @@ const AdminDrawer = ({ logout }) => {
       <Toolbar />
       <Box sx={{ overflow: "auto", pr: 2, pl: 2 }}>
         <List>
-          <ListItem button sx={{ cursor: "pointer", borderRadius: '10px'}} onClick={() => navigate("/inicio")}>
+          <ListItem button sx={{ cursor: "pointer", borderRadius: '10px'}} onClick={() => navigate("/admin/inicio")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <DashboardIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Inicio" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/usuarios")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/usuarios")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <GroupIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Usuarios" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/categorias")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/categorias")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <CategoryIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Categorias" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/servicio-admin")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/servicios")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <RoomServiceIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Servicios" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/reservaciones")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/reservaciones")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <EventAvailableIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Reservaciones" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/bitacora")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/bitacora")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <HistoryIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Historial" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }}>
-            <ListItemIcon sx={{ minWidth: 36 }}>
-              <SettingsIcon sx={{ color: "var(--beige-dark)" }} />
-            </ListItemIcon>
-            <ListItemText primary="Configuración" />
-          </ListItem>
           <Divider sx={{ my: 1 }} />
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/perfil")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/perfil/:idUser")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <PersonIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>

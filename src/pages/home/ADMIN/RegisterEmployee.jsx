@@ -90,7 +90,7 @@ const RegisterEmployee = () => {
             if (res.ok) {
                 setSuccess(true);
                 setTimeout(() => {
-                    navigate("/usuarios");
+                    navigate("/admin/usuarios");
                 }, 1500);
             } else {
                 setErrorMessage("Algo salió mal, intente de nuevo.");

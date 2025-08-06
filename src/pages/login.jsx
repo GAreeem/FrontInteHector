@@ -48,9 +48,11 @@ function Login() {
         console.log(data);
         localStorage.setItem("token", data.token);
         localStorage.setItem("rol", data.rol);
+        localStorage.setItem("idUser", data.idUser);
+        console.log(data);
         switch (data.rol) {
           case "ADMIN":
-            navigate("/inicio");
+            navigate("admin/inicio");
             break;
           case "USUARIO":
             navigate("/usuario");
