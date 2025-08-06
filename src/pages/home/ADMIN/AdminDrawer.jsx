@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Divider,
@@ -9,57 +8,69 @@ import {
   Toolbar,
 } from "@mui/material";
 import {
-  Category as CategoryIcon,
   Dashboard as DashboardIcon,
-  Add as AddIcon,
+  Group as GroupIcon,
+  Category as CategoryIcon,
+  RoomService as RoomServiceIcon,
   EventAvailable as EventAvailableIcon,
-  Send as SendIcon,
+  History as HistoryIcon,
   Settings as SettingsIcon,
+  Person as PersonIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AdminDrawer = ({ logout }) => {
   const navigate = useNavigate();
-
   return (
     <div>
       <Toolbar />
-      <Box sx={{ overflow: "auto" }}>
+      <Box sx={{ overflow: "auto", pr: 2, pl: 2 }}>
         <List>
-          <ListItem button style={{ cursor: "pointer" }} onClick={() => window.location.href = "/inicio"}
-                >
-            <ListItemIcon>
+          <ListItem button sx={{ cursor: "pointer", borderRadius: '10px'}} onClick={() => navigate("/admin/inicio")}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
               <DashboardIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Inicio" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer" }} onClick={() => navigate('/categorias')}>
-            <ListItemIcon>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/usuarios")}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
+              <GroupIcon sx={{ color: "var(--beige-dark)" }} />
+            </ListItemIcon>
+            <ListItemText primary="Usuarios" />
+          </ListItem>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/categorias")}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
               <CategoryIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
-            <ListItemText primary="Gestionar Categorias" />
+            <ListItemText primary="Categorias" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer" }} onClick={() => navigate("/bitacora")}>
-            <ListItemIcon>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/servicios")}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
+              <RoomServiceIcon sx={{ color: "var(--beige-dark)" }} />
+            </ListItemIcon>
+            <ListItemText primary="Servicios" />
+          </ListItem>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/reservaciones")}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
               <EventAvailableIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
-            <ListItemText primary="Bitacora" />
+            <ListItemText primary="Reservaciones" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer" }}>
-            <ListItemIcon>
-              <SendIcon sx={{ color: "var(--beige-dark)" }} />
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/bitacora")}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
+              <HistoryIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
-            <ListItemText primary="Enviar Invitaciones" />
-          </ListItem>
-          <ListItem button style={{ cursor: "pointer" }}>
-            <ListItemIcon>
-              <SettingsIcon sx={{ color: "var(--beige-dark)" }} />
-            </ListItemIcon>
-            <ListItemText primary="Configuración" />
+            <ListItemText primary="Historial" />
           </ListItem>
           <Divider sx={{ my: 1 }} />
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/perfil/:idUser")}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
+              <PersonIcon sx={{ color: "var(--beige-dark)" }} />
+            </ListItemIcon>
+            <ListItemText primary="Perfil" />
+          </ListItem>
           <ListItem
             button
             onClick={() => {
@@ -85,9 +96,9 @@ const AdminDrawer = ({ logout }) => {
                 }
               });
             }}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", borderRadius: '10px' }}
           >
-            <ListItemIcon>
+            <ListItemIcon sx={{ minWidth: 36 }}>
               <LogoutIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Cerrar Sesión" />

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AdminDrawer from "./AdminDrawer";
+import LogoResvy from "../../../assets/logo_sin.png";
 
 const drawerWidth = 240;
 
@@ -45,7 +46,8 @@ const LayoutAdmin = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <img src={LogoResvy} width={28} alt="" />
+          <Typography variant="h6" sx={{fontWeight: 'bold'}} noWrap>
             Resvy
           </Typography>
         </Toolbar>
