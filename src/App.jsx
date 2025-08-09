@@ -10,7 +10,7 @@ import Usuarios from "./pages/home/ADMIN/Usuarios";
 import RegisterEmployee from "./pages/home/ADMIN/registerEmployee";
 import ServiciosAdmin from "./pages/home/ADMIN/Servicios";
 import RegisterService from "./pages/home/ADMIN/RegisterService";
-
+import MisReservaciones from "./pages/home/CLIENT/MisReservaciones";
 import ServiciosUsuario from "./pages/home/Usuario/Servicios";
 import CrearServicio from "./pages/home/Usuario/CrearServicio";
 import VerServicio from "./pages/home/CLIENT/VerReservacion";
@@ -97,6 +97,14 @@ const App = () => {
           element={
             <RutaProtegida rolPermitido="CLIENTE">
               <HacerReservacion />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/mis-reservaciones"
+          element={
+            <RutaProtegida rolPermitido="CLIENTE">
+              <MisReservaciones />
             </RutaProtegida>
           }
         />
