@@ -38,7 +38,7 @@ const ClienteHome = () => {
 
   const resultadosServicios = servicios.filter(srv =>
     srv.nombre.toLowerCase().includes(filtro)
-  ).map(srv => ({ tipo: 'servicio', id: srv.idCategoriaServicio, nombre: srv.nombre }));
+  ).map(srv => ({ tipo: 'servicio', id: srv.idServicio, nombre: srv.nombre }));
 
   const resultados = [...resultadosCategorias, ...resultadosServicios].slice(0, 5);
 
@@ -188,7 +188,7 @@ const ClienteHome = () => {
                   {sugerencias.map((item, index) => (
                     <Box
                       key={index}
-                      onClick={() => navigate(item.tipo === 'categoria' ? `/ver-servicio/${item.id}` : `/detalle-servicio/${item.id}`)}
+                      onClick={() => navigate(item.tipo === 'categoria' ? `/ver-servicio/${item.id}` : `/reservar/${item.id}`)}
                       sx={{
                         px: 2,
                         py: 1,
@@ -338,7 +338,7 @@ const ClienteHome = () => {
                     position: 'relative',
                     overflow: 'hidden'
                   }}
-                  onClick={() => navigate(`/detalle-servicio/${srv.idCategoriaServicio}`)}
+                  onClick={() => navigate(`/reservar/${srv.idServicio}`)}
                 >
                   <CardMedia
                     component="img"
