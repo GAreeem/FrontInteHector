@@ -9,13 +9,13 @@ import {
   CircularProgress,
   Divider,
 } from "@mui/material";
-import LayoutAdmin from "../ADMIN/LayoutAdmin";
+import LayoutCliente from "../CLIENT/LayoutCliente";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import BadgeIcon from "@mui/icons-material/Badge";
 
-const PerfilUsuario = () => {
+const PerfilCliente = () => {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
@@ -45,28 +45,28 @@ const PerfilUsuario = () => {
 
   if (loading) {
     return (
-      <LayoutAdmin>
+      <LayoutCliente>
         <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
           <CircularProgress />
         </Box>
-      </LayoutAdmin>
+      </LayoutCliente>
     );
   }
 
   if (!usuario) {
     return (
-      <LayoutAdmin>
+      <LayoutCliente>
         <Container>
           <Typography variant="h5" color="error">
             No se pudieron cargar los datos del perfil.
           </Typography>
         </Container>
-      </LayoutAdmin>
+      </LayoutCliente>
     );
   }
 
   return (
-    <LayoutAdmin>
+    <LayoutCliente>
       <Container maxWidth="sm" sx={{ mt: 5 }}>
         <Paper
           elevation={6}
@@ -131,8 +131,8 @@ const PerfilUsuario = () => {
           />
         </Paper>
       </Container>
-    </LayoutAdmin>
+    </LayoutCliente>
   );
 };
 
-export default PerfilUsuario;
+export default PerfilCliente;

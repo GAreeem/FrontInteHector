@@ -40,6 +40,7 @@ const ClientDrawer = () => {
         <Box>
           <Button color="inherit" onClick={() => navigate("/cliente")}>Inicio</Button>
           <Button color="inherit" onClick={() => navigate("/mis-reservaciones")}>Mis Reservaciones</Button>
+          <Button color="inherit" onClick={() => navigate("/perfil-cliente")}>Perfil</Button>
           <Button color="inherit" onClick={handleLogout}>Cerrar Sesión</Button>
         </Box>
       </Toolbar>

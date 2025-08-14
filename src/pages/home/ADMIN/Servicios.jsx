@@ -14,14 +14,18 @@ import {
   Menu,
   MenuItem,
   Dialog,
+  Fab,
   DialogTitle,
   DialogActions,
   useTheme,
   useMediaQuery,
-  Paper
+  Paper, styled
 } from "@mui/material";
 import { Add as AddIcon, MoreVert as MoreVertIcon } from "@mui/icons-material";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import LayoutAdmin from "./LayoutAdmin";
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { useNavigate } from "react-router-dom";
 
 const Servicios = () => {
@@ -30,10 +34,18 @@ const Servicios = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedServicio, setSelectedServicio] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const [showOnlyActive, setShowOnlyActive] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const BootstrapTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} arrow classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: { color: theme.palette.common.black },
+    [`& .${tooltipClasses.tooltip}`]: { backgroundColor: theme.palette.common.black },
+  }));
 
   const fetchServicios = async () => {
     try {
@@ -77,12 +89,11 @@ const Servicios = () => {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/servicio/${selectedServicio.id}`, {
-        method: "DELETE",
+      const res = await fetch(`http://localhost:8080/servicio/desactivar/${selectedServicio.id}`, {
+        method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
-        alert("Servicio eliminado correctamente");
         fetchServicios();
       } else {
         alert("Error al eliminar el servicio");
@@ -94,14 +105,31 @@ const Servicios = () => {
     }
   };
 
+  const handleRestore = async (servicio) => {
+  try {
+    const res = await fetch(`http://localhost:8080/servicio/activar/${servicio.id}`, {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.ok) {
+      fetchServicios();
+    } else {
+      alert("Error al restaurar el servicio");
+    }
+  } catch (error) {
+    console.error("Error al restaurar servicio:", error);
+  } finally {
+    handleMenuClose();
+  }
+};
+
   useEffect(() => {
     fetchServicios();
   }, []);
 
-  const filteredServicios = servicios.filter((s) =>
-    s.nombre.toLowerCase().includes(search.toLowerCase())
-  );
-
+  const serviciosFiltrados = servicios
+    .filter((s) => s.nombre.toLowerCase().includes(search.toLowerCase()))
+    .filter((s) => (showOnlyActive ? s.status : true));
 
   return (
     <LayoutAdmin>
@@ -117,14 +145,23 @@ const Servicios = () => {
             onChange={(e) => setSearch(e.target.value)}
             sx={{ width: 300 }}
           />
-          <Box display="flex" alignItems="center" gap={2}>
-            <Button startIcon={<AddIcon />} onClick={() => navigate("/registro-servicio")} variant="contained">Agregar servicio</Button>
+          <Box display="flex" gap={2}>
+            <BootstrapTooltip title={showOnlyActive ? "Mostrar todos" : "Mostrar solo activos"}>
+              <IconButton color="primary" onClick={() => setShowOnlyActive(!showOnlyActive)}>
+                {showOnlyActive ? <FilterListOffIcon /> : <FilterListIcon />}
+              </IconButton>
+            </BootstrapTooltip>
+            <BootstrapTooltip title="Agregar servicio">
+              <Fab size="small" color="primary" aria-label="add" onClick={() => navigate("/registro-servicio")}>
+                <AddIcon />
+              </Fab>
+            </BootstrapTooltip>
           </Box>
-        </Box>
+          </Box>
 
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {filteredServicios.length > 0 ? (
-            filteredServicios.map((servicio) => (
+          {serviciosFiltrados.length > 0 ? (
+            serviciosFiltrados.map((servicio) => (
               <Grid size={{ xs: 2, sm: 4, md: 4 }} key={servicio.id}>
                 <Card sx={{ borderRadius: 3, position: 'relative' }}>
                   <IconButton
@@ -137,10 +174,31 @@ const Servicios = () => {
                   <CardMedia sx={{ position: 'relative', height: 200 }}>
                     <Grid container spacing={1}>
                       <img src={servicio.imagenUrl || "/default-image.png"} alt={servicio.nombre} style={{ width: '100%', height: 200, objectFit: 'cover', borderRadius: '12px 12px 0 0' }} />
-                      <Chip
-                        label={<>${servicio.precio}</>}
-                        sx={{ position: 'absolute', top: 10, left: 10, bgcolor: 'rgba(0,0,0,0.7)', color: 'white', fontWeight: 'bold' }}
-                      />
+                      <Box
+    sx={{
+      position: "absolute",
+      top: 10,
+      left: 10,
+      display: "flex",
+      gap: 1 // espacio entre chips
+    }}
+  >
+    <Chip
+      label={`$${servicio.precio}`}
+      sx={{
+        bgcolor: "rgba(0,0,0,0.7)",
+        color: "white",
+        fontWeight: "bold"
+      }}
+    />
+    <Chip
+      label={servicio.status ? "Activo" : "Inactivo"}
+      color={servicio.status ? "success" : "error"}
+      sx={{
+        fontWeight: "bold"
+      }}
+    />
+  </Box>
                       <Grid size={4}>
                       </Grid>
                     </Grid>
@@ -174,9 +232,15 @@ const Servicios = () => {
           )}
         </Grid>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-          <MenuItem onClick={handleEdit}>Editar servicio</MenuItem>
-          <MenuItem onClick={handleDeleteConfirm}>Eliminar servicio</MenuItem>
-        </Menu>
+  <MenuItem onClick={handleEdit}>Editar servicio</MenuItem>
+  
+  {selectedServicio?.status ? (
+    <MenuItem onClick={handleDeleteConfirm}>Eliminar servicio</MenuItem>
+  ) : (
+    <MenuItem onClick={handleRestore}>Restaurar servicio</MenuItem>
+  )}
+</Menu>
+
 
         <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
           <DialogTitle>¿Estás seguro de eliminar este servicio?</DialogTitle>

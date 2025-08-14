@@ -111,12 +111,13 @@ const ClienteHome = () => {
     <LayoutCliente>
       <Box>
         {/* Banner con buscador */}
-        <Card sx={{ position: "relative", height: 350, mt: 4, borderRadius: 4, overflow: "visible", }}>
+        <Card sx={{ position: "relative", height: 350, mt: 4, overflow: "visible", borderRadius: 4 }}>
           <CardMedia
             component="img"
             height="350"
             image="https://www.bbva.com/wp-content/uploads/2017/12/billetes-avion-viajes-tarifas-comparacion-precios-ahorro-compra-vuelos-bbva-1024x683.jpg"
             alt="Banner"
+            sx={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: 4}}
           />
           <Box
             sx={{
@@ -133,6 +134,7 @@ const ClienteHome = () => {
               px: 2,
               textAlign: "center",
               overflow: "visible",
+              borderRadius: 4,
             }}
           >
             <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 3, color: "#333" }}>
@@ -251,7 +253,7 @@ const ClienteHome = () => {
                   sx={{
                     minWidth: 250,
                     maxWidth: 250,
-                    height: 125,
+                    height: 100,
                     p: 2,
                     borderRadius: 4,
                     cursor: "pointer",
@@ -267,21 +269,8 @@ const ClienteHome = () => {
                     },
                   }}
                 >
-                  <Typography variant="Body1" sx={{ fontWeight: 'bold', mb: 1 }}>
+                  <Typography variant="Body1" sx={{ fontWeight: 'bold', mb: 1, textAlign: 'center', color: '#000' }}>
                     {cat.nombre}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
-                    {cat.descripcion}
                   </Typography>
                 </Paper>
               ))}

@@ -39,11 +39,16 @@ const AdminHome = () => {
 
   const [usuarios, setUsuarios] = useState([]);
   const [categorias, setCategorias] = useState([]);
+  const [servicios, setServicios] = useState([]);
+  const [bitacoras, setBitacoras] = useState([]);
 
 
   const [empleadosCount, setEmpleadosCount] = useState(0);
   const [clientesCount, setClientesCount] = useState(0);
   const [categoriasCount, setCategoriasCount] = useState(0);
+  const [serviciosCount, setServiciosCount] = useState(0);
+  const [bitacoraCount, setBitacoraCount] = useState(0);
+  
 
   const [usuariosActivos, setUsuariosActivos] = useState(0);
   const [usuariosInactivos, setUsuariosInactivos] = useState(0);
@@ -52,7 +57,7 @@ const AdminHome = () => {
   const [serviciosActivos, setServiciosActivos] = useState(0);
   const [serviciosInactivos, setServiciosInactivos] = useState(0);
   const [categoriasActivos, setCategoriasActivos] = useState(0);
-  const [categoriasInactivos, setCategoriasInactivos] = useState(0);
+  const [categoriasInactivos, setCategoriasInactivos] = useState(0); 
 
   useEffect(() => {
     if (!token) {
@@ -98,6 +103,46 @@ const AdminHome = () => {
   }
 };
 
+const fetchServicios = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/servicio/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (res.ok && data.result) {
+        setServicios(data.result);
+        contarServicios(data.result);
+      } else {
+        setServicios([]);
+        resetCountServicios();
+      }
+    } catch (error) {
+      console.error("Error al cargar servicios:", error);
+      setServicios([]);
+    }
+  };
+
+     const fetchBitacoras = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:8080/bitacora/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        setBitacoras(data);
+        setBitacoraCount(data.length);
+      } catch (error) {
+        console.error("Error al traer la bitácora", error);
+        setBitacoraCount(0);
+      }
+    };
+
   const resetCountsUsuarios = () => {
     setEmpleadosCount(0);
     setClientesCount(0);
@@ -111,6 +156,12 @@ const AdminHome = () => {
     setCategoriasCount(0);
     setCategoriasActivos(0);
     setCategoriasInactivos(0);
+  };
+
+  const resetCountServicios = () => {
+    setServiciosCount(0);
+    setServiciosActivos(0);
+    setServiciosInactivos(0);
   };
 
   const contarRoles = (usuarios) => {
@@ -130,10 +181,22 @@ const AdminHome = () => {
   setCategoriasInactivos(categorias.filter((c) => c.status === false).length);
 };
 
+const contarServicios = (servicios) => {
+  setServiciosCount(servicios.length);
+  setServiciosActivos(servicios.filter((c) => c.status === true).length);
+  setServiciosInactivos(servicios.filter((c) => c.status === false).length);
+};
+
+const contarBitacoras = (bitacoras) => {
+  setBitacoraCount(bitacoras.length);
+};
+
 
   useEffect(() => {
     fetchUsuarios();
     fetchCategorias();
+    fetchServicios();
+    fetchBitacoras();
   }, []);
 
   const pieData = [
@@ -190,7 +253,7 @@ const AdminHome = () => {
     },
     {
       label: "Servicios",
-      value: "",
+      value: serviciosCount,
       icon: <StarIcon sx={{ fontSize: 40, color: "#F43F5E" }} />,
       bgColor: "#FEF2F2",
       rutas: "/admin/servicios",
@@ -204,7 +267,7 @@ const AdminHome = () => {
     },
     {
       label: "Historial",
-      value: "",
+      value: bitacoraCount,
       icon: <HistoryIcon sx={{ fontSize: 40, color: "#6366F1" }} />,
       bgColor: "#EEF2FF",
       rutas: "/admin/bitacora",

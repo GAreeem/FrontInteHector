@@ -20,6 +20,10 @@ import ServiciosInactivos from "./pages/home/ADMIN/ServiciosInactivos";
 import PerfilUsuario from "./pages/home/ADMIN/Perfil";
 import ClienteHome from "./pages/home/CLIENT/ClienteHome";
 import EditService from "./pages/home/ADMIN/editService";
+import UsuarioHome from "./pages/home/Usuario/UsuarioHome";
+import Servicios from "./pages/home/Usuario/Servicios";
+import Perfil from "./pages/home/Usuario/Perfil";
+import PerfilCliente from "./pages/home/CLIENT/Perfil";
 
 const App = () => {
   return (
@@ -39,7 +43,7 @@ const App = () => {
           <Route path="bitacora" element={<RutaProtegida rolPermitido="ADMIN"><Bitacora /></RutaProtegida>} />
           <Route path="registro-empleado" element={<RutaProtegida rolPermitido="ADMIN"><RegisterEmployee /></RutaProtegida>} />
           <Route path="registro-servicio" element={<RutaProtegida rolPermitido="ADMIN"><RegisterService /></RutaProtegida>} />
-          <Route path="perfil/:idUser" element={<RutaProtegida rolPermitido="ADMIN"><PerfilUsuario /></RutaProtegida>} />
+          <Route path="perfil" element={<RutaProtegida rolPermitido="ADMIN"><PerfilUsuario /></RutaProtegida>} />
         </Route>
 
         <Route
@@ -58,23 +62,41 @@ const App = () => {
             </RutaProtegida>
           }
         />
-        <Route 
+       <Route
           path="/usuario"
           element={
             <RutaProtegida rolPermitido="USUARIO">
-              <VerServicio />
+              <UsuarioHome />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/servicios"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <Servicios />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/crear-servicio/:idCategoria"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <CrearServicio />
             </RutaProtegida>
           }
         />
 
-        <Route
-          path="/registro-empleado"
+         <Route
+          path="/perfil"
           element={
-            <RutaProtegida rolPermitido="ADMIN">
-              <RegisterEmployee />
+            <RutaProtegida rolPermitido="USUARIO">
+              <Perfil />
             </RutaProtegida>
           }
         />
+
+       
         <Route
           path="/registro-servicio"
           element={
@@ -113,6 +135,14 @@ const App = () => {
           element={
             <RutaProtegida rolPermitido="CLIENTE">
               <ClienteHome />
+            </RutaProtegida>
+          }
+        />
+         <Route
+          path="/perfil-cliente"
+          element={
+            <RutaProtegida rolPermitido="CLIENTE">
+              <PerfilCliente />
             </RutaProtegida>
           }
         />

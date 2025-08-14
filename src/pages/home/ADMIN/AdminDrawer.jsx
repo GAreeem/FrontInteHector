@@ -14,7 +14,6 @@ import {
   RoomService as RoomServiceIcon,
   EventAvailable as EventAvailableIcon,
   History as HistoryIcon,
-  Settings as SettingsIcon,
   Person as PersonIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material";
@@ -65,7 +64,7 @@ const AdminDrawer = ({ logout }) => {
             <ListItemText primary="Historial" />
           </ListItem>
           <Divider sx={{ my: 1 }} />
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/perfil/:idUser")}>
+          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/perfil")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <PersonIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
