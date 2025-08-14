@@ -1,0 +1,223 @@
+/* Página 404 Moderna - Versión React */
+.auth-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 3rem 2rem;
+    text-align: center;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: slideIn 0.8s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fondo del body para la página 404 */
+body.error-page {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-container h1 {
+    font-size: 6rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.auth-container h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.auth-container p {
+    margin-bottom: 2.5rem;
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.auth-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: auto;
+    min-width: 200px;
+    padding: 15px 30px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    text-decoration: none;
+}
+
+.auth-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(45deg, #7c8eeb, #8458a7);
+}
+
+.auth-button:active {
+    transform: translateY(-1px);
+}
+
+/* Ilustración para la página 404 */
+.error-illustration {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2rem auto;
+    animation: float-gentle 3s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Versión alternativa con glassmorphism */
+.auth-container.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.auth-container.glass h1 {
+    background: linear-gradient(45deg, #fff, #f0f0f0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.auth-container.glass h2 {
+    color: #f8f9fa;
+}
+
+.auth-container.glass p {
+    color: #e9ecef;
+}
+
+/* Efectos de partículas (opcional) */
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: float-particle 15s infinite linear;
+}
+
+@keyframes float-particle {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Versión minimalista alternativa */
+.auth-container.minimal {
+    background: #ffffff;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.auth-container.minimal h1 {
+    color: #ff4757;
+    font-size: 5rem;
+    animation: none;
+}
+
+.auth-container.minimal .auth-button {
+    background: #3742fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(55, 66, 250, 0.3);
+}
+
+.auth-container.minimal .auth-button:hover {
+    background: #2f3542;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .auth-container {
+        margin: 1rem;
+        padding: 2rem 1.5rem;
+    }
+    
+    .auth-container h1 {
+        font-size: 4rem;
+    }
+    
+    .auth-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .auth-button {
+        min-width: 180px;
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}

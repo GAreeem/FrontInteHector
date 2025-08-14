@@ -24,11 +24,13 @@ import UsuarioHome from "./pages/home/Usuario/UsuarioHome";
 import Servicios from "./pages/home/Usuario/Servicios";
 import Perfil from "./pages/home/Usuario/Perfil";
 import PerfilCliente from "./pages/home/CLIENT/Perfil";
+import NotFound from "./pages/404";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         
@@ -146,7 +148,7 @@ const App = () => {
             </RutaProtegida>
           }
         />
-        <Route path="*" element={<Login />} /> {/* Ruta por defecto */}
+        <Route path="*" element={<NotFound />} /> {/* Ruta por defecto */}
       </Routes>
     </BrowserRouter>
   );
