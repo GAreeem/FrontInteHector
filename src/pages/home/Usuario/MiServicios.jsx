@@ -24,11 +24,11 @@ import {
 import { Add as AddIcon, MoreVert as MoreVertIcon } from "@mui/icons-material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
-import LayoutAdmin from "./LayoutAdmin";
+import LayoutUsuario from "./LayoutUsuario";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { useNavigate } from "react-router-dom";
 
-const Servicios = () => {
+const MiServicios = () => {
   const [search, setSearch] = useState("");
   const [servicios, setServicios] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -78,7 +78,7 @@ const Servicios = () => {
   };
 
   const handleEdit = () => {
-    navigate(`/admin/editar-servicio/${selectedServicio.idServicio}`);
+    navigate(`/editar-servicio/${selectedServicio.idServicio}`);
     handleMenuClose();
   };
 
@@ -87,41 +87,41 @@ const Servicios = () => {
     handleMenuClose();
   };
 
-  const handleDelete = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/servicio/desactivar/${selectedServicio.idServicio}`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.ok) {
-        fetchServicios();
-      } else {
-        alert("Error al eliminar el servicio");
-      }
-    } catch (error) {
-      console.error("Error al eliminar servicio:", error);
-    } finally {
-      setOpenDialog(false);
-    }
-  };
+//   const handleDelete = async () => {
+//     try {
+//       const res = await fetch(`http://localhost:8080/servicio/desactivar/${selectedServicio.idServicio}`, {
+//         method: "PUT",
+//         headers: { Authorization: `Bearer ${token}` },
+//       });
+//       if (res.ok) {
+//         fetchServicios();
+//       } else {
+//         alert("Error al eliminar el servicio");
+//       }
+//     } catch (error) {
+//       console.error("Error al eliminar servicio:", error);
+//     } finally {
+//       setOpenDialog(false);
+//     }
+//   };
 
-  const handleRestore = async () => {
-  try {
-    const res = await fetch(`http://localhost:8080/servicio/activar/${selectedServicio.idServicio}`, {
-      method: "PUT",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (res.ok) {
-      fetchServicios();
-    } else {
-      alert("Error al restaurar el servicio");
-    }
-  } catch (error) {
-    console.error("Error al restaurar servicio:", error);
-  } finally {
-    handleMenuClose();
-  }
-};
+//   const handleRestore = async () => {
+//   try {
+//     const res = await fetch(`http://localhost:8080/servicio/activar/${selectedServicio.idServicio}`, {
+//       method: "PUT",
+//       headers: { Authorization: `Bearer ${token}` },
+//     });
+//     if (res.ok) {
+//       fetchServicios();
+//     } else {
+//       alert("Error al restaurar el servicio");
+//     }
+//   } catch (error) {
+//     console.error("Error al restaurar servicio:", error);
+//   } finally {
+//     handleMenuClose();
+//   }
+// };
 
   useEffect(() => {
     fetchServicios();
@@ -132,7 +132,7 @@ const Servicios = () => {
     .filter((s) => (showOnlyActive ? s.status : true));
 
   return (
-    <LayoutAdmin>
+    <LayoutUsuario>
       <Typography variant="h5" mb={2}>Servicios</Typography>
       <Paper  sx={{ width: '100%', mb: 2, borderRadius: 4 }}>
       <Box p={2}>
@@ -152,7 +152,7 @@ const Servicios = () => {
               </IconButton>
             </BootstrapTooltip>
             <BootstrapTooltip title="Agregar servicio">
-              <Fab size="small" color="primary" aria-label="add" onClick={() => navigate("/registro-servicio")}>
+              <Fab size="small" color="primary" aria-label="add" onClick={() => navigate("/registrar-servicio")}>
                 <AddIcon />
               </Fab>
             </BootstrapTooltip>
@@ -234,26 +234,26 @@ const Servicios = () => {
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
   <MenuItem onClick={handleEdit}>Editar servicio</MenuItem>
   
-  {selectedServicio?.status ? (
+  {/* {selectedServicio?.status ? (
     <MenuItem onClick={handleDeleteConfirm}>Desactivar servicio</MenuItem>
   ) : (
     <MenuItem onClick={handleRestore}>Restaurar servicio</MenuItem>
 
-  )}
+  )} */}
 </Menu>
 
 
-        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        {/* <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
           <DialogTitle>¿Estás seguro de eliminar este servicio?</DialogTitle>
           <DialogActions>
             <Button onClick={() => setOpenDialog(false)}>Cancelar</Button>
             <Button color="error" onClick={handleDelete}>Eliminar</Button>
           </DialogActions>
-        </Dialog>
+        </Dialog> */}
       </Box>
       </Paper>
-    </LayoutAdmin>
+    </LayoutUsuario>
   );
 }
 
-export default Servicios;
+export default MiServicios;

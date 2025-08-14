@@ -68,7 +68,7 @@ const Servicios = () => {
                     variant="contained"
                     fullWidth
                     onClick={() =>
-                      navigate(`/crear-servicio/${categoria.idCategoriaServicio}`)
+                      navigate(`/registrar-servicio`)
                     }
                   >
                     Crear servicio

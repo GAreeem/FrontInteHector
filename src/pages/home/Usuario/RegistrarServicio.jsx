@@ -1,68 +1,20 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  Paper,
-  Typography,
-  TextField,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
-  Avatar
-} from "@mui/material";
+import { Box, Button, IconButton, Paper, Typography, Grid, Avatar, TextField, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { Close as CloseIcon, ArrowBack as ArrowBackIcon } from "@mui/icons-material";
-import CropOriginalIcon from "@mui/icons-material/CropOriginal";
-import LayoutAdmin from "./LayoutAdmin";
-import { useNavigate, useParams } from "react-router-dom";
+import CropOriginalIcon from '@mui/icons-material/CropOriginal';
+import LayoutUsuario from "./LayoutUsuario";
+import { useNavigate } from "react-router-dom";
 
-const EditService = () => {
-  const { idServicio } = useParams();
+const RegistrarServicio = () => {
   const token = localStorage.getItem("token");
   const [image, setImage] = useState(null);
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState("");
+  const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [precio, setPrecio] = useState('');
   const [categorias, setCategorias] = useState([]);
-  const [idCategoria, setIdCategoria] = useState("");
-
+  const [idCategoria, setIdCategoria] = useState('');
+  
   const navigate = useNavigate();
-
-  const fetchCategorias = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/categoria/", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (data && data.result) {
-        setCategorias(data.result);
-      }
-    } catch (err) {
-      console.error("Error al obtener categorías:", err);
-    }
-  };
-
-  const fetchServicio = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/servicio/${idServicio}`, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (res.ok && data.result) {
-        const servicio = data.result;
-        setNombre(servicio.nombre);
-        setDescripcion(servicio.descripcion);
-        setPrecio(servicio.precio);
-        setIdCategoria(servicio.categoria?.idCategoriaServicio || "");
-        setImage({ preview: servicio.imagenUrl });
-      }
-    } catch (err) {
-      console.error("Error al cargar servicio:", err);
-    }
-  };
 
   const handleChange = (event) => {
     setIdCategoria(event.target.value);
@@ -74,47 +26,75 @@ const EditService = () => {
 
     const newImage = {
       file: files[0],
-      preview: URL.createObjectURL(files[0]),
+      preview: URL.createObjectURL(files[0])
     };
 
-    setImage(newImage);
+    setImage(newImage);  // Solo permite una imagen
   };
 
   const handleRemoveImage = () => {
     setImage(null);
   };
 
-  const handleSubmit = async () => {
-  if (!nombre || !descripcion || !precio || !idCategoria) {
-    alert("Completa todos los campos");
+  const fetchCategorias = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/categoria/", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (data && data.result) {
+        setCategorias(data.result);
+      } else {
+        setCategorias([]);
+      }
+    } catch (err) {
+      console.error("Error al obtener categorías:", err);
+      setCategorias([]);
+    }
+  };
+
+ const handleSubmit = async () => {
+  if (!nombre || !descripcion || !precio || !idCategoria || !image) {
+    alert("Completa todos los campos y sube una imagen");
     return;
   }
 
   const formData = new FormData();
-  formData.append("nombre", nombre);
-  formData.append("descripcion", descripcion);
-  formData.append("precio", precio);
-  formData.append("idCategoria", idCategoria);
 
-  // Solo enviar la imagen si el usuario seleccionó una nueva
-  if (image?.file) {
-    formData.append("archivo", image.file);
-  }
+  // Convertimos el objeto datos a Blob con tipo application/json
+  const datos = {
+    nombre: nombre,
+    descripcion: descripcion,
+    precio: parseFloat(precio),
+    idCategoria: parseInt(idCategoria),
+  };
+
+  formData.append(
+    "datos",
+    new Blob([JSON.stringify(datos)], { type: "application/json" })
+  );
+  formData.append("imagen", image.file);
 
   try {
-    const response = await fetch(`http://localhost:8080/servicio/${idServicio}`, {
-      method: "PUT",
-      headers: { Authorization: `Bearer ${token}` },
+    const response = await fetch("http://localhost:8080/servicio/", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,  // Solo pon los headers que sí son necesarios
+        // No pongas 'Content-Type' aquí
+      },
       body: formData,
     });
 
     if (response.ok) {
-      alert("Servicio actualizado correctamente");
-      navigate("/admin/servicios");
+      const result = await response.json();
+      console.log(result);
+      alert("Servicio registrado correctamente");
+      navigate("/mis-servicios");
     } else {
       const error = await response.json();
       console.error(error);
-      alert("Error al actualizar el servicio");
+      alert("Error al registrar el servicio");
     }
   } catch (error) {
     console.error(error);
@@ -123,22 +103,22 @@ const EditService = () => {
 };
 
   useEffect(() => {
-  fetchCategorias();
-    fetchServicio();
-  
-}, []);
+    fetchCategorias();
+  }, []);
 
   return (
-    <LayoutAdmin>
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh" position="relative">
+    <LayoutUsuario>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh" position='relative'>
         <IconButton
-          sx={{ position: "absolute", top: 0, left: 20, bgcolor: "white", boxShadow: 1 }}
-          onClick={() => navigate("/admin/servicios")}
+          sx={{ position: 'absolute', top: 0, left: 20, bgcolor: 'white', boxShadow: 1 }}
+          onClick={() => navigate('/mis-servicios')}
         >
           <ArrowBackIcon />
         </IconButton>
-        <Paper sx={{ pr: 4, pl: 4, pb: 4, width: "100%", maxWidth: 800, borderRadius: 4, textAlign: "center" }}>
-          <Typography variant="h5" p={3}>Editar servicio</Typography>
+        <Paper sx={{ pr: 4, pl: 4, pb: 4, width: '100%', maxWidth: 800, borderRadius: 4, textAlign: 'center' }}>
+          <Typography variant="h5" p={3}>
+            Crear servicio
+          </Typography>
           <Box sx={{ pl: 2, pr: 2 }}>
             <Box mb={2}>
               <TextField
@@ -193,24 +173,24 @@ const EditService = () => {
             </Box>
           </Box>
 
-          <Typography variant="h6" textAlign="start" mb={2}>Imagen</Typography>
+          <Typography variant="h6" textAlign={'start'} mb={2}>Imagen</Typography>
           <Box
             sx={{
-              border: "2px dashed #ccc",
+              border: '2px dashed #ccc',
               borderRadius: 4,
               p: 4,
               mb: 3,
-              cursor: "pointer",
-              position: "relative",
-              textAlign: "center",
+              cursor: 'pointer',
+              position: 'relative',
+              textAlign: 'center'
             }}
-            onClick={() => document.getElementById("image-upload").click()}
+            onClick={() => document.getElementById('image-upload').click()}
           >
             <input
               type="file"
               accept="image/*"
               id="image-upload"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={handleImageChange}
               multiple={false}
             />
@@ -223,9 +203,15 @@ const EditService = () => {
                 />
                 <IconButton
                   size="small"
-                  sx={{ position: "absolute", top: -10, right: -10, bgcolor: "white", boxShadow: 1 }}
+                  sx={{
+                    position: 'absolute',
+                    top: -10,
+                    right: -10,
+                    bgcolor: 'white',
+                    boxShadow: 1
+                  }}
                   onClick={(e) => {
-                    e.stopPropagation();
+                    e.stopPropagation();  // Evita que abra el input file al dar click en la X
                     handleRemoveImage();
                   }}
                 >
@@ -236,25 +222,29 @@ const EditService = () => {
               <>
                 <CropOriginalIcon sx={{ fontSize: 40 }} />
                 <Typography variant="body1">Selecciona una imagen</Typography>
-                <Typography variant="body2" color="textSecondary">Sube 1 imagen</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Sube 1 imagen
+                </Typography>
               </>
             )}
           </Box>
 
-          <Box mt={3} display="flex" justifyContent="flex-end" gap={2}>
-            <Button
-              variant="outlined"
-              size="medium"
-              sx={{ textTransform: "none", fontWeight: "bold", color: "white", bgcolor: "black" }}
-              onClick={handleSubmit}
-            >
-              Guardar cambios
-            </Button>
-          </Box>
+          {image && (
+            <Box mt={3} display="flex" justifyContent="flex-end" gap={2}>
+              <Button
+                variant="outlined"
+                size="medium"
+                sx={{ textTransform: 'none', fontWeight: 'bold', color: 'white', bgcolor: 'black' }}
+                onClick={handleSubmit}
+              >
+                Registrar
+              </Button>
+            </Box>
+          )}
         </Paper>
       </Box>
-    </LayoutAdmin>
+    </LayoutUsuario>
   );
-};
+}
 
-export default EditService;
+export default RegistrarServicio;

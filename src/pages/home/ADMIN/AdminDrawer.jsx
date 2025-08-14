@@ -51,12 +51,12 @@ const AdminDrawer = ({ logout }) => {
             </ListItemIcon>
             <ListItemText primary="Servicios" />
           </ListItem>
-          <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/reservaciones")}>
+          {/* <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/reservaciones")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <EventAvailableIcon sx={{ color: "var(--beige-dark)" }} />
             </ListItemIcon>
             <ListItemText primary="Reservaciones" />
-          </ListItem>
+          </ListItem> */}
           <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/admin/bitacora")}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <HistoryIcon sx={{ color: "var(--beige-dark)" }} />

@@ -65,7 +65,7 @@ const VerServicio = () => {
               <CardMedia
                 component="img"
                 sx={{ width: 300 }}
-                image="https://i.pinimg.com/1200x/c6/9c/e0/c69ce0375b8fec49f82677f355c73fb4.jpg" // imagen estática por ahora
+                image={servicio.imagenUrl} // imagen estática por ahora
                 alt="Imagen servicio"
               />
               <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>

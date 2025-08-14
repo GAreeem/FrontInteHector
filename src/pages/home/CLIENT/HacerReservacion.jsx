@@ -108,7 +108,7 @@ const HacerReservacion = () => {
               <CardMedia
                 component="img"
                 sx={{ width: 200 }}
-                image="https://i.pinimg.com/1200x/c6/9c/e0/c69ce0375b8fec49f82677f355c73fb4.jpg"
+                image={servicio.imagenUrl || "/default-image.png"}
                 alt={servicio.nombre}
               />
               <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>

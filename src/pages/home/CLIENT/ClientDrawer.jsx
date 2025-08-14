@@ -26,6 +26,7 @@ const ClientDrawer = () => {
           showConfirmButton: false,
         }).then(() => {
           navigate("/login");
+          localStorage.clear();
         });
       }
     });

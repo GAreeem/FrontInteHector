@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import AdminHome from "./pages/home/ADMIN/AdminHome";
+import RecuperarContra from "./pages/RecuperarContra";
+import RestablecerContra from "./pages/RestablecerContra";
+import RegistrarServicio from "./pages/home/Usuario/RegistrarServicio";
 import RutaProtegida from "./Components/RutaProtegida";
 import Registro from "./pages/registro";
 import Categorias from "./pages/home/ADMIN/Categorias";
@@ -24,6 +27,7 @@ import UsuarioHome from "./pages/home/Usuario/UsuarioHome";
 import Servicios from "./pages/home/Usuario/Servicios";
 import Perfil from "./pages/home/Usuario/Perfil";
 import PerfilCliente from "./pages/home/CLIENT/Perfil";
+import MiServicios from "./pages/home/Usuario/MiServicios";
 import NotFound from "./pages/404";
 
 const App = () => {
@@ -33,6 +37,8 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
+         <Route path="/recuperar-contrasena" element={<RecuperarContra />} />
+        <Route path="/restablecer-contrasena/:token" element={<RestablecerContra />} />
         
         {/* RUTAS ADMIN */}
         <Route path="/admin">
@@ -85,6 +91,22 @@ const App = () => {
           element={
             <RutaProtegida rolPermitido="USUARIO">
               <CrearServicio />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/mis-servicios"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <MiServicios />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/registrar-servicio"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <RegistrarServicio />
             </RutaProtegida>
           }
         />
@@ -148,7 +170,7 @@ const App = () => {
             </RutaProtegida>
           }
         />
-        <Route path="*" element={<NotFound />} /> {/* Ruta por defecto */}
+        <Route path="*" element={<Login />} /> {/* Ruta por defecto */}
       </Routes>
     </BrowserRouter>
   );

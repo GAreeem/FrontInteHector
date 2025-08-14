@@ -26,7 +26,7 @@ const LayoutAdmin = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     window.location.href = "/login";
   };
 

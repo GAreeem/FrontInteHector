@@ -158,7 +158,7 @@ function Login() {
             component="button"
             variant="body1"
             underline="always"
-            onClick={() => navigate("/registro")}
+            onClick={() => navigate("/recuperar-contrasena")}
            
           >
             ¿Olvidaste tu contraseña?

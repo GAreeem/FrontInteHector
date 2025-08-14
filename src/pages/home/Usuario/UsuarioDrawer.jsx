@@ -29,11 +29,11 @@ const UsuarioDrawer = ({ logout }) => {
                           </ListItemIcon>
                           <ListItemText primary="Agregar servicios" />
                         </ListItem>
-                        <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("")}>
+                        <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/mis-servicios")}>
                           <ListItemIcon sx={{ minWidth: 36 }}>
                             <EventAvailableIcon sx={{ color: "var(--beige-dark)" }} />
                           </ListItemIcon>
-                          <ListItemText primary="Crear Reservaciones" />
+                          <ListItemText primary="mis Servicios" />
                         </ListItem>
                         <Divider sx={{ my: 1 }} />
                         <ListItem button style={{ cursor: "pointer", borderRadius: '10px' }} onClick={() => navigate("/perfil")}>

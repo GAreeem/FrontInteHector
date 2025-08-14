@@ -72,7 +72,7 @@ const ClienteHome = () => {
 
   const fetchServicios = async () => {
     try {
-      const res = await fetch("http://localhost:8080/servicio/", {
+      const res = await fetch("http://localhost:8080/servicio/activos", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
