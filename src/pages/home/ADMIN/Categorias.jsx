@@ -13,6 +13,7 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import Chip from "@mui/material/Chip";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterListOffIcon from '@mui/icons-material/FilterListOff';
+import { motion } from "framer-motion";
 
 const Categorias = () => {
   const [categorias, setCategorias] = useState([]);
@@ -143,6 +144,10 @@ const Categorias = () => {
 
   return (
     <LayoutAdmin>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
       <Paper  sx={{ width: '100%', mb: 2, borderRadius: 4 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" p={2}>
                     <TextField
@@ -254,6 +259,7 @@ const Categorias = () => {
         </DialogActions>
       </Dialog>
     </Box>
+    </motion.div>
     </LayoutAdmin>
   );
 };

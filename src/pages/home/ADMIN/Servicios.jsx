@@ -27,6 +27,7 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import LayoutAdmin from "./LayoutAdmin";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Servicios = () => {
   const [search, setSearch] = useState("");
@@ -133,6 +134,10 @@ const Servicios = () => {
 
   return (
     <LayoutAdmin>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
       <Typography variant="h5" mb={2}>Servicios</Typography>
       <Paper  sx={{ width: '100%', mb: 2, borderRadius: 4 }}>
       <Box p={2}>
@@ -145,18 +150,32 @@ const Servicios = () => {
             onChange={(e) => setSearch(e.target.value)}
             sx={{ width: 300 }}
           />
-          <Box display="flex" gap={2}>
-            <BootstrapTooltip title={showOnlyActive ? "Mostrar todos" : "Mostrar solo activos"}>
-              <IconButton color="primary" onClick={() => setShowOnlyActive(!showOnlyActive)}>
-                {showOnlyActive ? <FilterListOffIcon /> : <FilterListIcon />}
-              </IconButton>
-            </BootstrapTooltip>
-            <BootstrapTooltip title="Agregar servicio">
-              <Fab size="small" color="primary" aria-label="add" onClick={() => navigate("/registro-servicio")}>
-                <AddIcon />
-              </Fab>
-            </BootstrapTooltip>
-          </Box>
+            <Box display="flex" gap={2}>
+  <BootstrapTooltip title={showOnlyActive ? "Mostrar todos" : "Mostrar solo activos"}>
+    <IconButton color="primary" onClick={() => setShowOnlyActive(!showOnlyActive)}>
+      {showOnlyActive ? <FilterListOffIcon /> : <FilterListIcon />}
+    </IconButton>
+  </BootstrapTooltip>
+
+  <BootstrapTooltip title="Agregar servicio">
+    <Fab size="small" color="primary" aria-label="add" onClick={() => navigate("/registro-servicio")}>
+      <AddIcon />
+    </Fab>
+  </BootstrapTooltip>
+
+  {/* Nuevo botón Inactivos */}
+  <BootstrapTooltip title="Ver servicios inactivos">
+    <Button
+      variant="contained"
+      color="error"
+      size="small"
+      onClick={() => navigate("/admin/servicios/inactivos")}
+      sx={{ borderRadius: 2 }}
+    >
+      Inactivos
+    </Button>
+  </BootstrapTooltip>
+</Box>
           </Box>
 
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
@@ -252,6 +271,7 @@ const Servicios = () => {
         </Dialog>
       </Box>
       </Paper>
+      </motion.div>
     </LayoutAdmin>
   );
 }

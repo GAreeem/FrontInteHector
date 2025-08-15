@@ -48,7 +48,7 @@ const AdminHome = () => {
   const [categoriasCount, setCategoriasCount] = useState(0);
   const [serviciosCount, setServiciosCount] = useState(0);
   const [bitacoraCount, setBitacoraCount] = useState(0);
-  
+  const [reservacionesCount, setReservacionesCount] = useState(0);
 
   const [usuariosActivos, setUsuariosActivos] = useState(0);
   const [usuariosInactivos, setUsuariosInactivos] = useState(0);
@@ -100,6 +100,25 @@ const AdminHome = () => {
     }
   } catch (err) {
     console.error("Error al obtener categorías:", err);
+  }
+};
+
+const fetchReservaciones = async () => {
+  try {
+    const res = await fetch("http://localhost:8080/reservacion/", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await res.json();
+    if (data && data.result) {
+      setReservacionesCount(data.result);
+      contarReservaciones(data.result);
+    } else {
+      setReservacionesCount(0);
+      resetCountReservaciones();
+    }
+  } catch (err) {
+    console.error("Error al obtener reservaciones:", err);
   }
 };
 
@@ -158,6 +177,10 @@ const fetchServicios = async () => {
     setCategoriasInactivos(0);
   };
 
+  const resetCountReservaciones = () => {
+    setReservacionesCount(0);
+  };
+
   const resetCountServicios = () => {
     setServiciosCount(0);
     setServiciosActivos(0);
@@ -173,6 +196,12 @@ const fetchServicios = async () => {
     setUsuariosInactivos(empleados.filter((u) => u.status === false).length);
     setClientesActivos(clientes.filter((u) => u.status === true).length);
     setClientesInactivos(clientes.filter((u) => u.status === false).length);
+  };
+
+  const contarReservaciones = (reservaciones) => {
+    setReservacionesCount(reservaciones.length);
+    setReservacionesActivos(reservaciones.filter((r) => r.status === true).length);
+    setReservacionesInactivos(reservaciones.filter((r) => r.status === false).length);
   };
 
   const contarCategorias = (categorias) => {
@@ -197,6 +226,7 @@ const contarBitacoras = (bitacoras) => {
     fetchCategorias();
     fetchServicios();
     fetchBitacoras();
+    fetchReservaciones();
   }, []);
 
   const pieData = [
@@ -260,7 +290,7 @@ const contarBitacoras = (bitacoras) => {
     },
     {
       label: "Reservaciones",
-      value: "",
+      value: reservacionesCount,
       icon: <EventAvailableIcon sx={{ fontSize: 40, color: "#10B981" }} />,
       bgColor: "#ECFDF5",
       rutas: "/admin/reservaciones",

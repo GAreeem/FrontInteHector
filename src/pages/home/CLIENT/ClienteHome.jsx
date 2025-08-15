@@ -15,6 +15,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { motion } from "framer-motion";
 
 const ClienteHome = () => {
   const token = localStorage.getItem("token");
@@ -109,6 +110,10 @@ const ClienteHome = () => {
 
   return (
     <LayoutCliente>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
       <Box>
         {/* Banner con buscador */}
         <Card sx={{ position: "relative", height: 350, mt: 4, overflow: "visible", borderRadius: 4 }}>
@@ -420,6 +425,7 @@ const ClienteHome = () => {
   </Card>
 </Box>
       </Box>
+      </motion.div>
     </LayoutCliente>
   );
 };

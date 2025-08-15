@@ -34,24 +34,27 @@ function Login() {
   e.preventDefault();
   setLoading(true);
   setErrorMessage("");
+
   try {
     const res = await fetch("http://localhost:8080/auth/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
     if (res.ok) {
       const data = await res.json();
       console.log(data);
-
+      if (!data.usuario.status) {
+        setErrorMessage("Tu cuenta está inactiva, contacta con el administrador.");
+        return; 
+      }
+      
       localStorage.setItem("token", data.token);
-      localStorage.setItem("idUser", data.usuario.idUser); // Nuevo
-      localStorage.setItem("rol", data.usuario.rol.rol);   // Nuevo
+      localStorage.setItem("idUser", data.usuario.idUser);
+      localStorage.setItem("rol", data.usuario.rol.rol);
 
-      switch (data.usuario.rol.rol) { // Nuevo
+      switch (data.usuario.rol.rol) {
         case "ADMIN":
           navigate("admin/inicio");
           break;
@@ -75,6 +78,7 @@ function Login() {
     setLoading(false);
   }
 };
+
 
   return (
     <Container maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: "calc(100vh - 60px)" }}>
@@ -172,7 +176,7 @@ function Login() {
             onClick={() => navigate("/registro")}
             sx={{ fontWeight: 'bold' }}
           >
-            Registrarme gratis
+            Registrarme
           </Link>
         </Box>
         {/*  <Box mt={4}>

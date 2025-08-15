@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 import Swal from "sweetalert2";
 import AdminLayout from "../ADMIN/LayoutAdmin";
+import { motion } from "framer-motion";
 
 function ServiciosInactivos() {
   const [servicios, setServicios] = useState([]);
@@ -65,6 +66,10 @@ function ServiciosInactivos() {
 
   return (
     <AdminLayout>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
       <Paper sx={{ padding: 4, margin: 4 }}>
         <Typography variant="h5" gutterBottom>
           Servicios Inactivos
@@ -110,6 +115,7 @@ function ServiciosInactivos() {
           </Table>
         </TableContainer>
       </Paper>
+      </motion.div>
     </AdminLayout>
   );
 }

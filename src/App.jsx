@@ -7,6 +7,8 @@ import RegistrarServicio from "./pages/home/Usuario/RegistrarServicio";
 import RutaProtegida from "./Components/RutaProtegida";
 import Registro from "./pages/registro";
 import Categorias from "./pages/home/ADMIN/Categorias";
+import EditarServicio from "./pages/home/Usuario/EditarServicio";
+import Reservaciones from "./pages/home/ADMIN/Reservaciones";
 
 import "./index.css"; 
 import Usuarios from "./pages/home/ADMIN/Usuarios";
@@ -39,6 +41,7 @@ const App = () => {
         <Route path="/registro" element={<Registro />} />
          <Route path="/recuperar-contrasena" element={<RecuperarContra />} />
         <Route path="/restablecer-contrasena/:token" element={<RestablecerContra />} />
+        <Route path="login/admin/inicio" element={<RutaProtegida rolPermitido="ADMIN"><AdminHome /></RutaProtegida>} />
         
         {/* RUTAS ADMIN */}
         <Route path="/admin">
@@ -47,10 +50,11 @@ const App = () => {
           <Route path="categorias" element={<RutaProtegida rolPermitido="ADMIN"><Categorias /></RutaProtegida>} />
           <Route path="servicios" element={<RutaProtegida rolPermitido="ADMIN"><ServiciosAdmin /></RutaProtegida>} />
           <Route path="editar-servicio/:idServicio" element={<RutaProtegida rolPermitido="ADMIN"><EditService /></RutaProtegida>} />
-          <Route path="servicio/editar" element={<RutaProtegida rolPermitido="ADMIN"><ServiciosInactivos /></RutaProtegida>} />
+          <Route path="servicios/inactivos" element={<RutaProtegida rolPermitido="ADMIN"><ServiciosInactivos /></RutaProtegida>} />
           <Route path="bitacora" element={<RutaProtegida rolPermitido="ADMIN"><Bitacora /></RutaProtegida>} />
           <Route path="registro-empleado" element={<RutaProtegida rolPermitido="ADMIN"><RegisterEmployee /></RutaProtegida>} />
           <Route path="registro-servicio" element={<RutaProtegida rolPermitido="ADMIN"><RegisterService /></RutaProtegida>} />
+          <Route path="reservaciones" element={<RutaProtegida rolPermitido="ADMIN"><Reservaciones /></RutaProtegida>} />
           <Route path="perfil" element={<RutaProtegida rolPermitido="ADMIN"><PerfilUsuario /></RutaProtegida>} />
         </Route>
 
@@ -79,7 +83,7 @@ const App = () => {
           }
         />
         <Route
-          path="/servicios"
+          path="/categorias"
           element={
             <RutaProtegida rolPermitido="USUARIO">
               <Servicios />
@@ -95,7 +99,7 @@ const App = () => {
           }
         />
         <Route
-          path="/mis-servicios"
+          path="/n-servicios"
           element={
             <RutaProtegida rolPermitido="USUARIO">
               <MiServicios />
@@ -107,6 +111,14 @@ const App = () => {
           element={
             <RutaProtegida rolPermitido="USUARIO">
               <RegistrarServicio />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/edit-servicio/:idServicio"
+          element={
+            <RutaProtegida rolPermitido="USUARIO">
+              <EditarServicio />
             </RutaProtegida>
           }
         />
@@ -170,7 +182,7 @@ const App = () => {
             </RutaProtegida>
           }
         />
-        <Route path="*" element={<Login />} /> {/* Ruta por defecto */}
+        <Route path="*" element={<NotFound />} /> {/* Ruta por defecto */}
       </Routes>
     </BrowserRouter>
   );

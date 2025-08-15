@@ -16,6 +16,7 @@ import { Close as CloseIcon, ArrowBack as ArrowBackIcon } from "@mui/icons-mater
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";
 import LayoutAdmin from "./LayoutAdmin";
 import { useNavigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const EditService = () => {
   const { idServicio } = useParams();
@@ -130,6 +131,10 @@ const EditService = () => {
 
   return (
     <LayoutAdmin>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh" position="relative">
         <IconButton
           sx={{ position: "absolute", top: 0, left: 20, bgcolor: "white", boxShadow: 1 }}
@@ -253,6 +258,7 @@ const EditService = () => {
           </Box>
         </Paper>
       </Box>
+      </motion.div>
     </LayoutAdmin>
   );
 };

@@ -15,6 +15,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterListOffIcon from '@mui/icons-material/FilterListOff';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { motion } from "framer-motion";
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -242,6 +243,10 @@ const handleClose = () => {
 
     return (
         <LayoutAdmin>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+            >
             <Paper sx={{ width: '100%', mb: 2, borderRadius: 4 }}>
                    <Dialog open={editing} onClose={() => setEditing(false)}>
                         <DialogTitle>Editar usuario</DialogTitle>
@@ -376,7 +381,7 @@ const handleClose = () => {
     </IconButton>
     </BootstrapTooltip>
     <BootstrapTooltip title="Agregar">
-      <Fab size="small" color="primary" aria-label="add" onClick={() => navigate("/registro-empleado")}>
+      <Fab size="small" color="primary" aria-label="add" onClick={() => navigate("/admin/registro-empleado")}>
         <AddIcon />
       </Fab>
     </BootstrapTooltip>
@@ -517,6 +522,7 @@ const handleClose = () => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
+            </motion.div>
         </LayoutAdmin>
     );
 };

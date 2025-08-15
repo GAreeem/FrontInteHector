@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { CalendarToday, AccessTime, Cancel } from "@mui/icons-material";
 import LayoutCliente from "../CLIENT/LayoutCliente";
+import { motion } from "framer-motion";
 
 const MisReservaciones = () => {
   const [reservaciones, setReservaciones] = useState([]);
@@ -27,6 +28,11 @@ const MisReservaciones = () => {
   const [reservaACancelar, setReservaACancelar] = useState(null);
   const idUser = localStorage.getItem("idUser");
   const token = localStorage.getItem("token");
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [reservaAEditar, setReservaAEditar] = useState(null);
+  const [nuevaFecha, setNuevaFecha] = useState("");
+  const [nuevaHora, setNuevaHora] = useState("");
+
 
   // Cargar reservaciones
   useEffect(() => {
@@ -51,6 +57,61 @@ const MisReservaciones = () => {
 
     cargarReservaciones();
   }, [idUser, token]);
+
+  const handleOpenEditDialog = (reserva) => {
+  setReservaAEditar(reserva);
+
+  // Precargar fecha y hora actuales
+  const fecha = new Date(reserva.reservationDate);
+  setNuevaFecha(fecha.toISOString().split("T")[0]);
+  setNuevaHora(fecha.toTimeString().slice(0,5));
+
+  setOpenEditDialog(true);
+};
+const handleActualizarReservacion = async () => {
+  if (!nuevaFecha || !nuevaHora) {
+    mostrarSnackbar("Por favor selecciona fecha y hora", "warning");
+    return;
+  }
+
+  const fechaCompleta = `${nuevaFecha}T${nuevaHora}:00`;
+
+  try {
+    const response = await fetch(`http://localhost:8080/reservacion/${reservaAEditar.idReservacion}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        idReservacion: reservaAEditar.idReservacion,
+        idUsuario: reservaAEditar.usuario?.idUsuario || idUser,
+        idServicio: reservaAEditar.servicio?.idServicio,
+        nombre: reservaAEditar.nombre,
+        descripcion: reservaAEditar.descripcion,
+        reservationDate: fechaCompleta
+      }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Error al actualizar reservación");
+
+    // Actualizar en la lista local
+    setReservaciones(reservaciones.map(r =>
+      r.idReservacion === reservaAEditar.idReservacion
+        ? { ...r, reservationDate: fechaCompleta }
+        : r
+    ));
+
+    mostrarSnackbar("Reservación actualizada correctamente", "success");
+    setOpenEditDialog(false);
+  } catch (error) {
+    console.error(error);
+    mostrarSnackbar(error.message, "error");
+  }
+};
+
+
 
   // Función para mostrar notificación
   const mostrarSnackbar = (message, severity) => {
@@ -125,10 +186,15 @@ const MisReservaciones = () => {
 
   return (
     <LayoutCliente>
+      
       <Box sx={{ p: 3 }}>
         <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 4 }}>
           Mis Reservaciones
         </Typography>
+        <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
 
         {reservaciones.length === 0 ? (
           <Typography variant="h6" textAlign="center" color="text.secondary">
@@ -182,6 +248,15 @@ const MisReservaciones = () => {
                     />
                     <Button
                       variant="outlined"
+                      color="primary"
+                      size="small"
+                      onClick={() => handleOpenEditDialog(reserva)}
+                    >
+                      Actualizar
+                    </Button>
+
+                    <Button
+                      variant="outlined"
                       color="error"
                       startIcon={<Cancel />}
                       onClick={() => handleOpenDialog(reserva)}
@@ -196,6 +271,7 @@ const MisReservaciones = () => {
             ))}
           </Box>
         )}
+        </motion.div>
 
         {/* Diálogo de confirmación */}
         <Dialog open={openDialog} onClose={handleCloseDialog}>
@@ -221,6 +297,38 @@ const MisReservaciones = () => {
           </DialogActions>
         </Dialog>
 
+        <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)}>
+          <DialogTitle>Actualizar Reservación</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Modifica la fecha y hora de tu reservación para "{reservaAEditar?.servicio?.nombre}".
+            </DialogContentText>
+            <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}>
+              <input
+                type="date"
+                value={nuevaFecha}
+                onChange={(e) => setNuevaFecha(e.target.value)}
+              />
+              <input
+                type="time"
+                value={nuevaHora}
+                onChange={(e) => setNuevaHora(e.target.value)}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenEditDialog(false)}>Cancelar</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleActualizarReservacion}
+            >
+              Guardar cambios
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+
         {/* Notificación */}
         <Snackbar
           open={openSnackbar}
@@ -236,6 +344,7 @@ const MisReservaciones = () => {
           </Alert>
         </Snackbar>
       </Box>
+      
     </LayoutCliente>
   );
 };

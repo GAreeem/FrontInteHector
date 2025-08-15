@@ -27,6 +27,7 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import LayoutUsuario from "./LayoutUsuario";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const MiServicios = () => {
   const [search, setSearch] = useState("");
@@ -78,7 +79,7 @@ const MiServicios = () => {
   };
 
   const handleEdit = () => {
-    navigate(`/editar-servicio/${selectedServicio.idServicio}`);
+    navigate(`/edit-servicio/${selectedServicio.idServicio}`);
     handleMenuClose();
   };
 
@@ -133,6 +134,10 @@ const MiServicios = () => {
 
   return (
     <LayoutUsuario>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+        >
       <Typography variant="h5" mb={2}>Servicios</Typography>
       <Paper  sx={{ width: '100%', mb: 2, borderRadius: 4 }}>
       <Box p={2}>
@@ -252,6 +257,7 @@ const MiServicios = () => {
         </Dialog> */}
       </Box>
       </Paper>
+      </motion.div>
     </LayoutUsuario>
   );
 }

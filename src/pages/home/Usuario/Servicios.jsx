@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import LayoutUsuario from "./LayoutUsuario";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Servicios = () => {
   const [categorias, setCategorias] = useState([]);
@@ -40,6 +41,7 @@ const Servicios = () => {
 
   return (
     <LayoutUsuario>
+      
       <Box p={0}>
         <Typography variant="h5" gutterBottom >
           Categorías disponibles
@@ -49,7 +51,10 @@ const Servicios = () => {
           Asegúrate de ofrecer <strong>información verídica, actualizada y completa</strong> al registrar tus servicios.
           Esta información será visible para los clientes y afecta directamente su decisión.
         </Alert>
-
+        <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
         <Grid container spacing={3}>
           {categorias.map((categoria) => (
             <Grid item xs={12} sm={6} md={4} key={categoria.idCategoriaServicio}>
@@ -77,8 +82,12 @@ const Servicios = () => {
               </Card>
             </Grid>
           ))}
+          
         </Grid>
+        </motion.div>
+        
       </Box>
+      
     </LayoutUsuario>
   );
 };

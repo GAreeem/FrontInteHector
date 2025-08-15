@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import CircularProgress from '@mui/material/CircularProgress';
 import LayoutAdmin from "./LayoutAdmin";
 import CheckIcon from '@mui/icons-material/Check';
+import { motion } from "framer-motion";
 
 const RegisterEmployee = () => {
     const token = localStorage.getItem("token");
@@ -105,6 +106,10 @@ const RegisterEmployee = () => {
 
     return (
         <LayoutAdmin>
+            <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
             <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Paper elevation={3} sx={{ padding: 4, width: '100%', borderRadius: 3 }}>
                     <Box display="flex" alignItems="center" justifyContent="center" mb={3}>
@@ -248,12 +253,13 @@ const RegisterEmployee = () => {
                         </Box>
                     </form>
                     <Box mt={2} textAlign="center">
-                        <Typography onClick={() => navigate("/usuarios")} variant="body2" sx={{ color: '#1D4ED8', cursor: 'pointer' }}>
+                        <Typography onClick={() => navigate("/admin/usuarios")} variant="body2" sx={{ color: '#1D4ED8', cursor: 'pointer' }}>
                             Volver a Usuarios
                         </Typography>
                     </Box>
                 </Paper>
             </Container>
+            </motion.div>
         </LayoutAdmin>
     );
 }

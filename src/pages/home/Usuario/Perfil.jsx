@@ -14,6 +14,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import BadgeIcon from "@mui/icons-material/Badge";
+import { motion } from "framer-motion";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState(null);
@@ -67,6 +68,10 @@ const Perfil = () => {
 
   return (
     <LayoutUsuario>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+      >
       <Container maxWidth="sm" sx={{ mt: 5 }}>
         <Paper
           elevation={6}
@@ -131,6 +136,7 @@ const Perfil = () => {
           />
         </Paper>
       </Container>
+      </motion.div>
     </LayoutUsuario>
   );
 };
